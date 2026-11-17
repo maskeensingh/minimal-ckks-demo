@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.20)
+project(SimpleCKKS LANGUAGES CXX)
+find_package(SEAL 3.6 REQUIRED)
+add_executable(ckks_demo main.cpp)
+target_compile_features(ckks_demo PRIVATE cxx_std_17)
+target_link_libraries(ckks_demo PRIVATE SEAL::seal)

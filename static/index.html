@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simple CKKS demo</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+  <h1>User side — your browser</h1>
+  <p>Encrypt in your browser → calculate on the server → decrypt in your browser.</p>
+  <p><strong>Browser:</strong> holds your numbers and secret key. <strong>Server terminal:</strong> receives encrypted objects and calculates. Open both windows side by side.</p>
+  <form id="form">
+    <label for="a">Vector A</label><input id="a" value="1.5, 2, -3" required>
+    <label for="b">Vector B</label><input id="b" value="4, -1, 0.5" required>
+    <p class="note">Use 1–16 comma-separated numbers per vector, between −1000 and 1000.</p>
+    <button id="run" disabled>Encrypt & calculate</button>
+  </form>
+  <p id="status" role="status" aria-live="polite"></p>
+  <div id="results" hidden>
+    <section>
+      <h2>1. Encrypted inputs sent to the server</h2>
+      <p>These three fields are the complete request. Your original numbers and secret key are not sent.</p>
+      <p class="note">The text boxes contain full Base64-encoded SEAL objects. Base64 represents the encrypted bytes; it is not the encryption itself.</p>
+      <label for="cipher_a">cipher_a — encrypted vector A</label><textarea id="cipher_a" rows="3" readonly spellcheck="false"></textarea>
+      <label for="cipher_b">cipher_b — encrypted vector B</label><textarea id="cipher_b" rows="3" readonly spellcheck="false"></textarea>
+      <details><summary>relin_keys — evaluation key sent for multiplication</summary>
+        <label for="relin_keys">Relinearization key (not your secret key)</label><textarea id="relin_keys" rows="3" readonly spellcheck="false"></textarea>
+      </details>
+    </section>
+    <section>
+      <h2>2. Where the request and calculations execute</h2>
+      <p><strong>Browser console:</strong> <code>client.mjs → encryptVector()</code> encodes and encrypts. <code>dashboard.mjs → form.onsubmit</code> sends <code>POST /calculate</code>.</p>
+      <p><strong>Server terminal:</strong> <code>app.py → Handler.do_POST()</code> receives the request and calls <code>main.cpp → main()</code>, where SEAL adds and multiplies ciphertexts.</p>
+      <p><strong>Back in the browser:</strong> <code>client.mjs → decryptVector()</code> decrypts the returned ciphertexts.</p>
+      <p class="note">Open Developer Tools → Console for actual browser calls, Network → calculate for the request and response, and the server Terminal for request receipt and completed SEAL operations. Messages contain no plaintext values or secret keys.</p>
+    </section>
+    <section>
+      <h2>3. Encrypted answers returned by the server</h2>
+      <label for="sum_cipher">Encrypted sum</label><textarea id="sum_cipher" rows="3" readonly spellcheck="false"></textarea>
+      <label for="product_cipher">Encrypted product</label><textarea id="product_cipher" rows="3" readonly spellcheck="false"></textarea>
+    </section>
+    <section>
+      <h2>4. User side — locally decrypted answers</h2>
+      <p><strong>Sum:</strong> <output id="sum"></output></p>
+      <p><strong>Product:</strong> <output id="product"></output></p>
+      <p class="note">CKKS is approximate, so small decimal differences are normal.</p>
+    </section>
+  </div>
+  <footer>Your secret key stays in this browser session. This local demo assumes trusted browser code.</footer>
+</main>
+<script type="module" src="/dashboard.mjs"></script>
+</body>
+</html>

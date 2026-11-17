@@ -1,0 +1,6 @@
+.deps/
+build/
+.DS_Store
+__pycache__/
+*.pyc
+test_results.json

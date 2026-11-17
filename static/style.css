@@ -1,0 +1,16 @@
+* { box-sizing: border-box; }
+body { margin: 0; color: #222; background: #fff; font: 16px/1.5 system-ui, sans-serif; }
+main { max-width: 800px; margin: 35px auto; padding: 0 20px 30px; }
+h1 { font-size: 28px; margin-bottom: 8px; }
+h2 { font-size: 20px; }
+label { display: block; margin: 12px 0 5px; font-weight: 600; }
+input, textarea { width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; font: 14px/1.5 monospace; }
+textarea { resize: vertical; background: #fafafa; overflow-wrap: anywhere; }
+button { padding: 10px 18px; border: 0; border-radius: 4px; color: #fff; background: #235f49; font: inherit; cursor: pointer; }
+button:disabled { opacity: .5; cursor: wait; }
+section { border-top: 1px solid #ddd; margin-top: 25px; padding-top: 10px; }
+pre { padding: 12px; background: #f5f5f5; overflow: auto; font-size: 13px; }
+summary { cursor: pointer; margin-top: 10px; }
+.note, footer { color: #666; font-size: 13px; }
+footer { margin-top: 30px; }
+output { overflow-wrap: anywhere; font-family: monospace; }
