@@ -66,11 +66,3 @@ No coefficient tables, polynomial traces, timers, error charts, downloads, or pl
 Requires Git, CMake 3.20+, a C++17 compiler, Python 3, and internet access for the first run. `run.sh` calls `setup.sh` when needed; the setup script downloads and builds Microsoft SEAL 3.6.5 into this project’s ignored `.deps/` folder. Later runs use that local copy. The browser dependency is already included; no npm or pip installation is needed. Tests need Node.js.
 
 With the app running, execute `node test.mjs`. Results are saved in `test_results.json`.
-
-## Privacy scope
-
-The provided client sends no plaintext vectors, encoded plaintexts, secret key or decrypted answers. Public and secret keys stay in the browser; only a relinearization evaluation key is sent. The native evaluator contains no key generation or decryption code. No plaintext fallback exists.
-
-Trust the browser code and its bundled library. Because this local server also delivers JavaScript, a malicious replacement of that code could steal inputs before encryption. This is an educational, honest-but-curious server demonstration, not a malicious-server-proof deployment or audited production service. The old WebAssembly binding requires `unsafe-eval` in the local CSP. The app binds to loopback.
-
-Automated checks use the actual browser WASM bundle in Node and the real native server. Dashboard logic is tested with a minimal DOM harness; this is not visual browser testing.
